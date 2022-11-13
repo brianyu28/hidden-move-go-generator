@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/hidden-move-go-generator/static/css/main.5f210916.css",
-    "main.js": "/hidden-move-go-generator/static/js/main.deaa617c.js",
-    "index.html": "/hidden-move-go-generator/index.html",
-    "main.5f210916.css.map": "/hidden-move-go-generator/static/css/main.5f210916.css.map",
-    "main.deaa617c.js.map": "/hidden-move-go-generator/static/js/main.deaa617c.js.map"
+    "main.css": "/static/css/main.5f210916.css",
+    "main.js": "/static/js/main.ce8b288c.js",
+    "index.html": "/index.html",
+    "main.5f210916.css.map": "/static/css/main.5f210916.css.map",
+    "main.ce8b288c.js.map": "/static/js/main.ce8b288c.js.map"
   },
   "entrypoints": [
     "static/css/main.5f210916.css",
-    "static/js/main.deaa617c.js"
+    "static/js/main.ce8b288c.js"
   ]
 }
