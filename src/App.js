@@ -9,11 +9,11 @@ function App() {
   const unitSize = 1000 / (size + 1);
 
   const starPoints = (() => {
-    if (size === 13) {
-      return [[4, 4], [4, 10], [7, 7], [10, 4], [10, 10]];
-    } else if (size == 9) {
+    if (size === 9) {
       return [[3, 3], [3, 7], [5, 5], [7, 3], [7, 7]];
-    } else if (size == 19) {
+    } else if (size === 13) {
+      return [[4, 4], [4, 10], [7, 7], [10, 4], [10, 10]];
+    } else if (size === 19) {
       return [[4, 4], [4, 10], [4, 16], [10, 4], [10, 10], [10, 16], [16, 4], [16, 10], [16, 16]];
     } else {
       return [];
@@ -29,6 +29,10 @@ function App() {
     setColor(event.target.value);
   }
 
+  const isHiddenMove = (x, y) => {
+    return hiddenMoves.some(move => move[0] === x && move[1] === y);
+  }
+
   const generateHiddenMove = () => {
     if (hiddenMoves.length >= size * size) {
       return;
@@ -36,16 +40,26 @@ function App() {
     while (true) {
       const x = Math.floor(Math.random() * size);
       const y = Math.floor(Math.random() * size);
-      if (!hiddenMoves.some(value => value[0] == x && value[1] == y)) {
+      if (!isHiddenMove(x, y)) {
         setHiddenMoves([...hiddenMoves, [x, y]]);
         break;
       }
     }
   };
 
+  const addHiddenMove = (x, y) => {
+    if (!isHiddenMove(x, y)) {
+      setHiddenMoves([...hiddenMoves, [x, y]]);
+    }
+  };
+
+  const removeHiddenMove = (x, y) => {
+    setHiddenMoves(hiddenMoves.filter(move => move[0] !== x || move[1] !== y));
+  };
+
   const reset = () => {
     setHiddenMoves([]);
-  }
+  };
 
   return (
     <div className="App">
@@ -66,12 +80,12 @@ function App() {
             </select>
           </div>
           <div className="configuration-section">
-            <button onClick={generateHiddenMove}>Generate Hidden Move</button>
+            <button onClick={generateHiddenMove}>Generate Random Stone</button>
             <button onClick={reset}>Reset</button>
           </div>
 
           <div>
-            <svg id="board-svg" viewBox="0 0 1000 1000">
+            <svg id="board-svg" pointerEvents="bounding-box" viewBox="0 0 1000 1000">
 
               <rect
                 x={0}
@@ -129,11 +143,29 @@ function App() {
               }
 
               {
+                // Clickable regions to add hidden moves
+                [...Array(size).keys()].map((x) => {
+                  return [...Array(size).keys()].map((y) => {
+                    return <circle
+                      key={`${x} ${y}`}
+                      onClick={() => addHiddenMove(x, y)}
+                      cx={(x + 1) * unitSize}
+                      cy={(y + 1) * unitSize}
+                      r={unitSize * 0.48}
+                      fill="transparent"
+                    />;
+                  });
+
+                })
+              }
+
+              {
                 // Hidden moves
                 hiddenMoves.map((move, i) => {
                   const [x, y] = move;
                   return <circle
                     key={i}
+                    onClick={() => removeHiddenMove(x, y)}
                     cx={(x + 1) * unitSize}
                     cy={(y + 1) * unitSize}
                     r={unitSize * 0.48}

@@ -1,6 +1,6 @@
 {
   "name": "hidden-move-go-generator",
-  "homepage": "https://brianyu28.github.io/hidden-move-go-generator/",
+  "homepage": "https://hiddenmove.brianyu.me/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
